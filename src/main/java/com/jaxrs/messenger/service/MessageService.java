@@ -6,6 +6,7 @@ import com.jaxrs.messenger.model.Message;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MessageService {
@@ -39,12 +40,12 @@ public class MessageService {
         return message;
     }
 
-    public Message updateMessage(Message message) {
+    public Optional<Message> updateMessage(Message message) {
         if (message.getId() <= 0) {
-            return null;
+            return Optional.empty();
         }
         messageMap.put(message.getId(), message);
-        return message;
+        return Optional.of(message);
     }
 
     public void deleteMessage(long id) {

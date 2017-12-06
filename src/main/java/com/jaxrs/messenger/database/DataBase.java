@@ -1,5 +1,6 @@
 package com.jaxrs.messenger.database;
 
+import com.jaxrs.messenger.model.Comment;
 import com.jaxrs.messenger.model.Message;
 import com.jaxrs.messenger.model.Profile;
 
@@ -17,6 +18,12 @@ public class DataBase {
 
         profiles.put("develop", new Profile(1L, "develop", "Paquito", "Chocolatero"));
         profiles.put("manager", new Profile(2L, "manager", "Juanito", "Palotes"));
+
+        messages.get(1L).getComments().add(new Comment(1L, "Este es mi comentario", "Manolis"));
+        messages.get(1L).getComments().add(new Comment(2L, "Nuevo comentario", "Manolis"));
+        messages.get(2L).getComments().add(new Comment(1L, "Este es mi comentario mensaje 2", "Manolis"));
+        messages.get(2L).getComments().add(new Comment(2L, "Nuevo comentario mensaje 2", "Manolis"));
+
     }
 
     public static Map<Long, Message> getMessages() {

@@ -1,6 +1,8 @@
 package com.jaxrs.messenger.model;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Message {
 
@@ -8,6 +10,7 @@ public class Message {
     private String message;
     private LocalDateTime created;
     private String autor;
+    private Map<Long, Comment> comments = new HashMap<>();
 
     public Message() {
         created = LocalDateTime.now();
@@ -55,6 +58,14 @@ public class Message {
 
     public void setAutor(String autor) {
         this.autor = autor;
+    }
+
+    public Map<Long, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<Long, Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
