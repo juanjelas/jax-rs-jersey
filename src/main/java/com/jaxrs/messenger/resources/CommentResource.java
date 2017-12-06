@@ -1,20 +1,50 @@
 package com.jaxrs.messenger.resources;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import com.jaxrs.messenger.model.Comment;
+import com.jaxrs.messenger.service.CommentService;
 
-@Path("/comments")
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+@Path("")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes({MediaType.APPLICATION_JSON})
 public class CommentResource {
 
+    private CommentService commentService = new CommentService();
+
     @GET
-    public String getCommentResource() {
-        return "new commentResource";
+    public List<Comment> getAllComments(@PathParam("messageId") long messageId) {
+        return commentService.getAllComments(messageId);
+    }
+
+    @POST
+    public Response addComment(@PathParam("messageId") long messageId, Comment comment, @Context UriInfo uriInfo) {
+        Comment newComment = commentService.addComment(messageId, comment);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newComment.getId())).build();
+        return Response.created(uri).entity(newComment).build();
+    }
+
+    @DELETE
+    @Path("/{commentId}")
+    public void deleteComment(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId) {
+        commentService.deleteComment(messageId, commentId);
     }
 
     @GET
-    @Path("{pathValue}")
-    public String getComments(@PathParam("pathValue") Long value) {
-        return "este es tu valor " + value;
+    @Path("/{commentId}")
+    public Response getComment(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId) {
+        Optional<Comment> commentOptional = commentService.getComment(messageId, commentId);
+        if (commentOptional.isPresent()) {
+            return Response.accepted(commentOptional.get()).build();
+        } else {
+            return Response.noContent().build();
+        }
     }
 }

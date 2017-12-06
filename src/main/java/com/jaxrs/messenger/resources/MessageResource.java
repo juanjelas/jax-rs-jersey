@@ -5,8 +5,11 @@ import com.jaxrs.messenger.resources.beans.MessageFilterBean;
 import com.jaxrs.messenger.service.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,19 +32,21 @@ public class MessageResource {
     }
 
     @GET
-    @Path("/{id : .+}")
-    public Message getMessage(@PathParam("id") long id) {
+    @Path("/{messageId}")
+    public Message getMessage(@PathParam("messageId") long id) {
         return service.getMessage(id);
     }
 
     @POST
-    public Response addMessage(Message message) {
-        return Response.accepted(service.addMessage(message)).build();
+    public Response addMessage(Message message, @Context UriInfo uriInfo) {
+        Message newMessage = service.addMessage(message);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(newMessage.getId())).build();
+        return Response.created(uri).entity(newMessage).build();
     }
 
     @PUT
-    @Path("/{id : .+}")
-    public Response updateMessage(@PathParam("id") long id, Message message) {
+    @Path("/{messageId}")
+    public Response updateMessage(@PathParam("messageId") long id, Message message) {
         message.setId(id);
         Optional<Message> messageOptional = service.updateMessage(message);
         if (messageOptional.isPresent()) {
@@ -52,14 +57,14 @@ public class MessageResource {
     }
 
     @DELETE
-    @Path("/{id : .+}")
-    public Response deleteMessage(@PathParam("id") long id) {
+    @Path("/{messageId}")
+    public Response deleteMessage(@PathParam("messageId") long id) {
         service.deleteMessage(id);
         return Response.noContent().build();
     }
 
-    @Path("/{id}/comments")
-    public CommentResource getCommentsResource(@PathParam("id") long id) {
+    @Path("/{messageId}/comments")
+    public CommentResource getCommentsResource(@PathParam("messageId") long id) {
         return new CommentResource();
     }
 }

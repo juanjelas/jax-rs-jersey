@@ -19,10 +19,10 @@ public class DataBase {
         profiles.put("develop", new Profile(1L, "develop", "Paquito", "Chocolatero"));
         profiles.put("manager", new Profile(2L, "manager", "Juanito", "Palotes"));
 
-        messages.get(1L).getComments().add(new Comment(1L, "Este es mi comentario", "Manolis"));
-        messages.get(1L).getComments().add(new Comment(2L, "Nuevo comentario", "Manolis"));
-        messages.get(2L).getComments().add(new Comment(1L, "Este es mi comentario mensaje 2", "Manolis"));
-        messages.get(2L).getComments().add(new Comment(2L, "Nuevo comentario mensaje 2", "Manolis"));
+        messages.get(1L).getComments().put(1L, new Comment(1L, "Este es mi comentario", "Manolis"));
+        messages.get(1L).getComments().put(2L, new Comment(2L, "Nuevo comentario", "Manolis"));
+        messages.get(2L).getComments().put(1L, new Comment(1L, "Este es mi comentario mensaje 2", "Manolis"));
+        messages.get(2L).getComments().put(2L, new Comment(2L, "Nuevo comentario mensaje 2", "Manolis"));
 
     }
 

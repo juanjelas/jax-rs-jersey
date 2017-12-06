@@ -29,7 +29,7 @@ public class CommentService {
         return comment;
     }
 
-    public Optional<Comment> updateMessage(long messageId, Comment comment) {
+    public Optional<Comment> updateComment(long messageId, Comment comment) {
         Map<Long, Comment> comments = messageMap.get(messageId).getComments();
         if (comment.getId() <= 0) {
             return Optional.empty();
@@ -38,7 +38,7 @@ public class CommentService {
         return Optional.of(comment);
     }
 
-    public void deleteMessage(long messageId, long commentId) {
+    public void deleteComment(long messageId, long commentId) {
         messageMap.get(messageId).getComments().remove(commentId);
     }
 }
