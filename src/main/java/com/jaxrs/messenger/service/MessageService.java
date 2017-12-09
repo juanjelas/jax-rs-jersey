@@ -1,6 +1,7 @@
 package com.jaxrs.messenger.service;
 
 import com.jaxrs.messenger.database.DataBase;
+import com.jaxrs.messenger.exception.DataNotFoundException;
 import com.jaxrs.messenger.model.Message;
 
 import java.util.ArrayList;
@@ -31,7 +32,11 @@ public class MessageService {
     }
 
     public Message getMessage(long id) {
-        return messageMap.get(id);
+        if (messageMap.containsKey(id)) {
+            return messageMap.get(id);
+        } else {
+            throw new DataNotFoundException("Elemento no encontrado");
+        }
     }
 
     public Message addMessage(Message message) {

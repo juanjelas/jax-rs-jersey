@@ -1,7 +1,9 @@
 package com.jaxrs.messenger.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Message {
@@ -11,6 +13,7 @@ public class Message {
     private LocalDateTime created;
     private String autor;
     private Map<Long, Comment> comments = new HashMap<>();
+    private List<Link> links = new ArrayList<>();
 
     public Message() {
         created = LocalDateTime.now();
