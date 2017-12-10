@@ -13,11 +13,11 @@ public class DataBase {
     private static final Map<String, Profile> profiles = new HashMap<>();
 
     static {
-        messages.put(1L, new Message(1L, "Buenos dias", "Manolis"));
-        messages.put(2L, new Message(2L, "Buenos noches", "Manolis"));
+        messages.put(1L, new Message(1L, "Buenos dias", "paquito"));
+        messages.put(2L, new Message(2L, "Buenos noches", "juanito"));
 
-        profiles.put("develop", new Profile(1L, "develop", "Paquito", "Chocolatero"));
-        profiles.put("manager", new Profile(2L, "manager", "Juanito", "Palotes"));
+        profiles.put("paquito", new Profile(1L, "paquito", "Fran", "Chocolatero"));
+        profiles.put("juanito", new Profile(2L, "juanito", "Juan", "Palotes"));
 
         messages.get(1L).getComments().put(1L, new Comment(1L, "Este es mi comentario", "Manolis"));
         messages.get(1L).getComments().put(2L, new Comment(2L, "Nuevo comentario", "Manolis"));
